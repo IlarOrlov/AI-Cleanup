@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-cleanup"
+version = "1.0.0"
+description = "Strip AI fingerprints from documents, text, images and media: invisible characters, chatbot artifacts, AI typography and metadata."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["Pillow>=10", "pypdf>=4"]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.6"]
+dev = ["pytest>=8", "python-docx>=1.1", "PySide6>=6.6"]
+
+[project.scripts]
+ai-cleanup = "ai_cleanup.cli:main"
+
+[project.gui-scripts]
+ai-cleanup-gui = "ai_cleanup.gui:run"
+
+[tool.setuptools]
+packages = ["ai_cleanup"]
