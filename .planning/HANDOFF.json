@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-11-23T09:15:06Z",
+  "phase": null,
+  "phase_name": "v1.0 initial build",
+  "phase_dir": null,
+  "plan": null,
+  "task": 6,
+  "total_tasks": 7,
+  "status": "paused",
+  "completed_tasks": [
+    {"id": 1, "name": "Core cleaners: text, markup, RTF, Office/ODF/EPUB, images, PDF, media", "status": "done", "commit": "7d385f0"},
+    {"id": 2, "name": "docx.js generator-fingerprint handling (validated on user's Investigation_Report_Template.docx)", "status": "done", "commit": "7d385f0"},
+    {"id": 3, "name": "Cross-platform CLI (ai-cleanup, python -m ai_cleanup, stdin pipe, --check/--json/--reveal)", "status": "done", "commit": "7d385f0"},
+    {"id": 4, "name": "PySide6 GUI (Files tab + Paste text tab), offscreen smoke-tested with screenshots", "status": "done", "commit": "7d385f0"},
+    {"id": 5, "name": "26 pytest tests, README, pyproject, CI workflow; pushed to origin/main", "status": "done", "commit": "7d385f0"},
+    {"id": 6, "name": "CI green on all platforms", "status": "in_progress", "progress": "Windows+macOS fully green; Ubuntu tests pass but 'GUI import smoke test' step fails: ImportError libEGL.so.1 (run 45144551842)"}
+  ],
+  "remaining_tasks": [
+    {"id": 6, "name": "Fix Ubuntu CI: add step `sudo apt-get update && sudo apt-get install -y libegl1 libxkbcommon0 libgl1` gated on runner.os == 'Linux' before pip install", "status": "not_started"},
+    {"id": 7, "name": "Optional (offered, not requested yet): app-menu .desktop launcher for the GUI", "status": "not_started"}
+  ],
+  "blockers": [],
+  "async_jobs": [],
+  "human_actions_pending": [],
+  "decisions": [
+    {"decision": "PySide6 GUI in a uv venv (.venv)", "rationale": "System Python 3.14 has no tkinter and no pip; PySide6 gives native drag-drop and works on Linux/Windows/macOS"},
+    {"decision": "Never overwrite by default; write name.cleaned.ext via temp file + os.replace", "rationale": "Safe and atomic on Windows and Linux"},
+    {"decision": "Do NOT remove pixel-level watermarks (SynthID etc.) and do NOT build a GPTZero/style-detector evasion rewriter", "rationale": "Out of scope by design: tool strips hidden artifacts and metadata, not authorship disguise. Told the user explicitly"},
+    {"decision": "Code/data files use 'code' profile: smart quotes left untouched", "rationale": "Replacing quotes can break string literals, JSON, CSV"},
+    {"decision": "Markup: typography only in text nodes, never in attributes or <script>/<style>", "rationale": "Keeps HTML/XML valid"},
+    {"decision": "Keep ZWJ/ZWNJ/VS where emoji or Arabic/Persian/Indic need them (--strict removes)", "rationale": "Avoid corrupting legitimate text"},
+    {"decision": "Decorative emoji removal is opt-in (--symbols); ballot boxes kept", "rationale": "User's Hebrew template uses U+2610 as form checkboxes"}
+  ],
+  "uncommitted_files": [],
+  "next_action": "Edit .github/workflows/ci.yml to install libegl1/libxkbcommon0/libgl1 on Linux runners, commit (no AI attribution lines), push, then `gh run watch` until all 6 jobs pass.",
+  "context_notes": "Repo /home/feanor/Desktop/AI-Cleanup, remote github.com/IlarOrlov/AI-Cleanup. GUI was launched for the user (PID 22771, .venv/bin/ai-cleanup-gui). Cleaned copy of user's doc: ~/Downloads/Investigation_Report_Template.cleaned.docx."
+}
